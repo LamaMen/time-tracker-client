@@ -39,7 +39,9 @@ class LoginScreen extends StatelessWidget implements AutoRouteWrapper {
               Radius.circular(defaultRadius),
             ),
           ),
-          child: BlocBuilder<LoginBloc, LoginState>(
+          child: BlocConsumer<LoginBloc, LoginState>(
+            listenWhen: (_, state) => state is LoginSuccessfulState,
+            listener: (context, _) {},  // TODO navigate to dashboard
             builder: (context, state) {
               if (state is FetchFailedState) {
                 return _FailureState(state: state);

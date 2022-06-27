@@ -7,16 +7,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
 import 'package:time_tracker_client/data/api/api_provider.dart';
 import 'package:time_tracker_client/data/models/auth/token.dart';
+import 'package:time_tracker_client/data/models/auth/user.dart';
 import 'package:time_tracker_client/data/models/auth/user_credentials.dart';
 
 const String _tokenKey = 'token';
 
 @singleton
-class LoginRepository {
+class AuthRepository {
   final ApiProvider _provider;
   final SharedPreferences _prefs;
 
-  LoginRepository(this._provider, this._prefs);
+  AuthRepository(this._provider, this._prefs);
 
   Future<Either<Failure, Token>> login(UserCredentials credentials) async {
     final api = _provider.getService();
@@ -39,5 +40,14 @@ class LoginRepository {
 
       return const Left(UnknownFailure());
     }
+  }
+
+  Future<User?> getCurrentUser() async {
+    final token = _prefs.getString(_tokenKey);
+    return token != null ? User.fromToken(token) : null;
+  }
+
+  Future<void> logOut() async {
+    _prefs.clear();
   }
 }

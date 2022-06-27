@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 part 'user.g.dart';
 
@@ -13,6 +14,11 @@ class User {
   User(this.id, this.name, this.surname, this.role);
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  factory User.fromToken(String token) {
+    final jwtData = JwtDecoder.decode(token);
+    return User.fromJson(jwtData);
+  }
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 

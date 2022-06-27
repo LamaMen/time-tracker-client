@@ -10,10 +10,10 @@ import 'package:time_tracker_client/domain/repository/auth/user_repository.dart'
 part 'event.dart';
 part 'state.dart';
 
-@singleton
+@injectable
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
-  final LoginRepository loginRepository;
+  final AuthRepository loginRepository;
 
   LoginBloc(this.userRepository, this.loginRepository)
       : super(const FetchUserState()) {

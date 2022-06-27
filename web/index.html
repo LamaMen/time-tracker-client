@@ -1,58 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+    <base href="$FLUTTER_BASE_HREF">
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description"
+          content="Client for service for tracking the time your team spent on different projects">
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="time_tracker_client">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="$FLUTTER_BASE_HREF">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Client for service for tracking the time your team spent on different projects">
+    <title>time_tracker_client</title>
+    <link rel="manifest" href="manifest.json">
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="time_tracker_client">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>time_tracker_client</title>
-  <link rel="manifest" href="manifest.json">
-
-  <script>
+    <script>
     // The value below is injected by flutter build, do not touch.
     var serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+
+    </script>
+    <script src="flutter.js" defer></script>
+
+    <style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    .container {
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+
+    .vertical-center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+
+    #loading {
+      width: 100vw;
+      text-align: center;
+    }
+
+    </style>
 </head>
 <body>
-  <script>
+
+<div class="container">
+    <div class="vertical-center">
+        <p id="loading">I am vertically centered.</p>
+    </div>
+</div>
+
+<script>
     window.addEventListener('load', function(ev) {
-      // Download main.dart.js
+      var loading = document.querySelector('#loading');
+      loading.textContent = "Loading entrypoint...";
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         }
       }).then(function(engineInitializer) {
+        loading.textContent = "Initializing engine...";
         return engineInitializer.initializeEngine();
       }).then(function(appRunner) {
+        loading.textContent = "Running app...";
         return appRunner.runApp();
       });
     });
-  </script>
+
+</script>
 </body>
 </html>
