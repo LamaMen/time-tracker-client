@@ -16,5 +16,5 @@ const primarySwatch = MaterialColor(
   },
 );
 
-const savedColor = 0xFFF4B41A;
-const cachedColor = 0xFFF50303;
+const savedColor = Color(0xFFF4B41A);
+const cachedColor = Color(0xFFF50303);

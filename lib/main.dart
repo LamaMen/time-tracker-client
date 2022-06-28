@@ -1,17 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:time_tracker_client/core/setup/app_router.gr.dart';
+import 'package:time_tracker_client/core/setup/guards/admin_guard.dart';
+import 'package:time_tracker_client/core/setup/guards/auth_guard.dart';
 import 'package:time_tracker_client/core/setup/injectable.dart';
 import 'package:time_tracker_client/core/theme/colors.dart';
 import 'package:time_tracker_client/core/theme/fonts.dart';
 
-void main() {
-  configureDependencies(kDebugMode ? 'dev' : 'prod');
+Future<void> main() async {
+  await configureDependencies(kDebugMode ? 'dev' : 'prod');
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final _appRouter = AppRouter();
+  final _appRouter = AppRouter(
+    adminGuard: getIt<AdminGuard>(),
+    authGuard: getIt<AuthGuard>(),
+  );
 
   MyApp({Key? key}) : super(key: key);
 

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:time_tracker_client/core/setup/app_router.gr.dart';
 import 'package:time_tracker_client/core/setup/injectable.dart';
 import 'package:time_tracker_client/core/theme/dimensions.dart';
 import 'package:time_tracker_client/core/widgets/dropdown_widget.dart';
@@ -41,7 +42,7 @@ class LoginScreen extends StatelessWidget implements AutoRouteWrapper {
           ),
           child: BlocConsumer<LoginBloc, LoginState>(
             listenWhen: (_, state) => state is LoginSuccessfulState,
-            listener: (context, _) {},  // TODO navigate to dashboard
+            listener: (context, _) => context.router.replace(DashboardRoute()),
             builder: (context, state) {
               if (state is FetchFailedState) {
                 return _FailureState(state: state);

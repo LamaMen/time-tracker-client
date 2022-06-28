@@ -42,9 +42,14 @@ class AuthRepository {
     }
   }
 
-  Future<User?> getCurrentUser() async {
+  Future<User?> getCurrentUserOrNull() async {
     final token = _prefs.getString(_tokenKey);
     return token != null ? User.fromToken(token) : null;
+  }
+
+  Future<User> getCurrentUser() async {
+    final token = _prefs.getString(_tokenKey);
+    return User.fromToken(token!);
   }
 
   Future<void> logOut() async {

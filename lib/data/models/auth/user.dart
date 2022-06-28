@@ -30,7 +30,15 @@ class User {
 
 enum UserRole {
   @JsonValue('Admin')
-  admin,
+  admin(1),
   @JsonValue('Employee')
-  employee
+  employee(2);
+
+  final int privacy;
+
+  const UserRole(this.privacy);
+
+  bool isCanAccess(UserRole another) {
+    return another.privacy >= privacy;
+  }
 }

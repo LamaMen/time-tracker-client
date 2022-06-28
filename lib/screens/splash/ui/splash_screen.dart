@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
               if (state is NavigateToLogin) {
                 context.router.replace(const LoginRoute());
               } else if (state is NavigateToDashboard) {
-                // TODO navigate to dashboard
+                context.router.replace(DashboardRoute());
               }
             });
           },
