@@ -1,6 +1,5 @@
 part of 'bloc.dart';
 
-@immutable
 class SplashState {}
 
 class InitialState implements SplashState {

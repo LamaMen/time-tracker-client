@@ -19,15 +19,15 @@ import 'package:time_tracker_client/screens/splash/ui/splash_screen.dart';
       children: [
         CustomRoute(
           page: TrackingScreen,
-          transitionsBuilder: TransitionsBuilders.noTransition,
-          durationInMilliseconds: 0,
+          transitionsBuilder: TransitionsBuilders.slideBottom,
+          durationInMilliseconds: 300,
           initial: true,
         ),
         CustomRoute(
           page: UsersScreen,
-          transitionsBuilder: TransitionsBuilders.noTransition,
+          transitionsBuilder: TransitionsBuilders.slideBottom,
           guards: [AdminGuard],
-          durationInMilliseconds: 0,
+          durationInMilliseconds: 300,
         ),
       ],
     ),

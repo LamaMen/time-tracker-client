@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker_client/core/theme/dimensions.dart';
 
 class ErrorTitle extends StatelessWidget {
   final String? _errorMessage;
@@ -11,7 +10,7 @@ class ErrorTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: defaultPadding * 2,
+      height: 16,
       child: _errorMessage != null
           ? Text(_errorMessage!, style: const TextStyle(color: Colors.red))
           : null,

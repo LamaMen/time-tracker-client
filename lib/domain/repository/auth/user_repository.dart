@@ -8,13 +8,13 @@ import 'package:time_tracker_client/data/models/auth/user.dart';
 import 'package:dartz/dartz.dart';
 
 @singleton
-class UserRepository {
+class UsersRepository {
   final ApiProvider _provider;
 
-  UserRepository(this._provider);
+  UsersRepository(this._provider);
 
   Future<Either<Failure, List<User>>> fetchUsers() async {
-    final api = _provider.getService();
+    final api = _provider.getAuthService();
     try {
       final users = await api.fetchUsers();
       return Right(users);

@@ -1,10 +1,7 @@
 part of 'bloc.dart';
 
-@immutable
-class SplashEvent {
-  const SplashEvent();
-}
+abstract class SplashEvent {}
 
-class Initialize extends SplashEvent {
+class Initialize implements SplashEvent {
   const Initialize();
 }

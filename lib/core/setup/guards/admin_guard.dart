@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
-import 'package:time_tracker_client/domain/repository/auth/login_repository.dart';
+import 'package:time_tracker_client/domain/repository/auth/auth_repository.dart';
 
 @singleton
 class AdminGuard extends AutoRouteGuard {

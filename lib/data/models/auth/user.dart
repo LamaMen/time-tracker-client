@@ -5,8 +5,7 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
-  @JsonKey(includeIfNull: false)
-  final String? id;
+  final String id;
   final String name;
   final String surname;
   final UserRole role;
@@ -40,5 +39,15 @@ enum UserRole {
 
   bool isCanAccess(UserRole another) {
     return another.privacy >= privacy;
+  }
+
+  @override
+  String toString() {
+    switch (this) {
+      case UserRole.admin:
+        return 'Администратор';
+      case UserRole.employee:
+        return 'Рабочий';
+    }
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_tracker_client/core/setup/app_router.gr.dart';
 import 'package:time_tracker_client/core/setup/injectable.dart';
-import 'package:time_tracker_client/core/theme/dimensions.dart';
 import 'package:time_tracker_client/core/widgets/dropdown_widget.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
 import 'package:time_tracker_client/screens/login/bloc/bloc.dart';
@@ -29,16 +28,14 @@ class LoginScreen extends StatelessWidget implements AutoRouteWrapper {
       body: Center(
         child: Container(
           padding: const EdgeInsets.symmetric(
-            vertical: defaultPadding * 2,
-            horizontal: defaultPadding * 4,
+            vertical: 16,
+            horizontal: 32,
           ),
           width: 300,
           height: 300,
           decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(defaultRadius),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           child: BlocConsumer<LoginBloc, LoginState>(
             listenWhen: (_, state) => state is LoginSuccessfulState,
@@ -150,7 +147,7 @@ class _SelectUserStateState extends State<_SelectUserState> {
         ),
         const Spacer(),
         ErrorTitle(errorMessage: _errorMessage),
-        const SizedBox(height: defaultPadding),
+        const SizedBox(height: 8),
         EnterButton(
           enabled: _isCanLogin,
           isLoad: widget.state is LoadTokenState,

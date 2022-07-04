@@ -25,6 +25,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   google_fonts: ^3.0.1
   json_annotation: ^4.5.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
