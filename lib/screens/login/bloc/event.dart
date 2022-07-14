@@ -1,25 +1,23 @@
 part of 'bloc.dart';
 
-abstract class LoginEvent {
-  const LoginEvent();
-}
+abstract class LoginEvent {}
 
-class FetchUsers extends LoginEvent {
+class FetchUsers implements LoginEvent {
   const FetchUsers();
 }
 
-class ChangeUser extends LoginEvent {
+class ChangeUser implements LoginEvent {
   final User? user;
 
   const ChangeUser(this.user);
 }
 
-class ChangePassword extends LoginEvent {
+class ChangePassword implements LoginEvent {
   final String password;
 
   const ChangePassword(this.password);
 }
 
-class TryLogin extends LoginEvent {
+class TryLogin implements LoginEvent {
   const TryLogin();
 }

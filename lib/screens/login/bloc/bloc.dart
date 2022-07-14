@@ -4,15 +4,15 @@ import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
 import 'package:time_tracker_client/data/models/auth/user_credentials.dart';
-import 'package:time_tracker_client/domain/repository/auth/login_repository.dart';
-import 'package:time_tracker_client/domain/repository/auth/user_repository.dart';
+import 'package:time_tracker_client/domain/repository/auth/auth_repository.dart';
+import 'package:time_tracker_client/domain/repository/auth/users_repository.dart';
 
 part 'event.dart';
 part 'state.dart';
 
 @injectable
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final UserRepository userRepository;
+  final UsersRepository userRepository;
   final AuthRepository loginRepository;
 
   LoginBloc(this.userRepository, this.loginRepository)

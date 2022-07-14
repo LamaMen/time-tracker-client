@@ -1,20 +1,18 @@
 part of 'bloc.dart';
 
-abstract class LoginState {
-  const LoginState();
-}
+abstract class LoginState {}
 
-class FetchUserState extends LoginState {
+class FetchUserState implements LoginState {
   const FetchUserState();
 }
 
-class FetchFailedState extends LoginState {
+class FetchFailedState implements LoginState {
   final Failure failure;
 
   const FetchFailedState(this.failure);
 }
 
-class SelectUserState extends LoginState {
+class SelectUserState implements LoginState {
   final List<User> users;
   final User? currentUser;
   final String password;
@@ -27,7 +25,7 @@ class SelectUserState extends LoginState {
   );
 
   UserCredentials get credentials =>
-      UserCredentials(currentUser!.id!, password);
+      UserCredentials(currentUser!.id, password);
 
   factory SelectUserState.onLoaded(List<User> users) =>
       SelectUserState(users, null, "");

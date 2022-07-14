@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker_client/core/theme/dimensions.dart';
 
 class DropdownWidget<T> extends StatelessWidget {
   final List<T> _elements;
@@ -27,7 +26,7 @@ class DropdownWidget<T> extends StatelessWidget {
       isExpanded: isExpanded,
       value: _currentElement,
       icon: const Icon(Icons.keyboard_arrow_down),
-      iconSize: defaultPadding * 3,
+      iconSize: 24,
       hint: Text(hintText!),
       onChanged: _onChanged,
       items: _elements.map((T element) {

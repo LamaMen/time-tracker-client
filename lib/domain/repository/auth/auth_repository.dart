@@ -20,7 +20,7 @@ class AuthRepository {
   AuthRepository(this._provider, this._prefs);
 
   Future<Either<Failure, Token>> login(UserCredentials credentials) async {
-    final api = _provider.getService();
+    final api = _provider.getAuthService();
     try {
       final token = await api.singIn(credentials);
       await _prefs.setString(_tokenKey, token.token);
@@ -50,6 +50,11 @@ class AuthRepository {
   Future<User> getCurrentUser() async {
     final token = _prefs.getString(_tokenKey);
     return User.fromToken(token!);
+  }
+
+  Future<Token?> getToken() async {
+    final token = _prefs.getString(_tokenKey);
+    return token != null ? Token(token) : null;
   }
 
   Future<void> logOut() async {
