@@ -12,6 +12,12 @@ abstract class ApiServiceAdmin {
   @POST('/projects')
   Future<Project> addProject(@Body() Project project);
 
+  @DELETE('/projects/{id}')
+  Future<void> deleteProject(
+    @Path() int id,
+    @Query('isArchive') bool isArchive,
+  );
+
   @GET('/users')
   Future<List<FullUser>> fetchUsers();
 

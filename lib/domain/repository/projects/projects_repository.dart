@@ -81,4 +81,29 @@ class ProjectsRepository {
       return const Left(UnknownFailure());
     }
   }
+
+  Future<Either<Failure, void>> deleteProject(
+    Project project,
+    bool isArchive,
+  ) async {
+    final api = _provider.getAdminService();
+    try {
+      await api.deleteProject(project.id, isArchive);
+      return const Right(null);
+    } on DioError catch (e) {
+      if (e.error is SocketException || e.error.contains('XMLHttpRequest')) {
+        return const Left(NoInternetFailure());
+      }
+
+      switch (e.response?.statusCode) {
+        case HttpStatus.internalServerError:
+        case HttpStatus.badGateway:
+          return const Left(ServerFailure());
+        case HttpStatus.unauthorized:
+          return const Left(WrongCredentialsFailure());
+      }
+
+      return const Left(UnknownFailure());
+    }
+  }
 }

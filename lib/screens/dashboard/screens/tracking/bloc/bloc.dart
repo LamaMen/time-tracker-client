@@ -30,6 +30,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     on<StartSessionEvent>(_onStartSession);
     on<StopSessionEvent>(_onStopSession);
     on<AddProjectEvent>(_onAddProject);
+    on<DeleteProjectEvent>(_onDeleteProject);
     on<_UpdateProjectsEvent>(_onUpdateProjects);
 
     timer = Timer.periodic(const Duration(seconds: 15), (_) => _updateScreen());
@@ -76,6 +77,14 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
   ) async {
     final project = Project(-1, event.projectName);
     await _projectsRepository.addProject(project);
+    add(_UpdateProjectsEvent(false));
+  }
+
+  Future<void> _onDeleteProject(
+    DeleteProjectEvent event,
+    Emitter<ProjectsState> emit,
+  ) async {
+    await _projectsRepository.deleteProject(event.project, event.isArchive);
     add(_UpdateProjectsEvent(false));
   }
 

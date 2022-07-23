@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_tracker_client/data/models/project/project.dart';
 import 'package:time_tracker_client/data/models/project/project_with_duration.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/tracking/bloc/bloc.dart';
+import 'package:time_tracker_client/screens/dashboard/ui/widgets/admin_widget.dart';
 
 class ProjectsList extends StatelessWidget {
   final List<ProjectWithDuration> projects;
@@ -41,18 +42,70 @@ class _ProjectView extends StatelessWidget {
     return ListTile(
       title: Text(project.name),
       subtitle: Text(progress),
-      trailing: project is InWorkProject
-          ? _ProjectActionButton(project: project, isActive: true)
-          : _ProjectActionButton(project: project, isActive: false),
+      trailing: _ProjectActions(project: project),
     );
   }
 }
 
+class _ProjectActions extends StatelessWidget {
+  final Project project;
+
+  const _ProjectActions({required this.project});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 72,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          _ProjectStartButton(
+            project: project,
+            isActive: project is InWorkProject,
+          ),
+          _ProjectActionButton(project: project).onlyAdmin(context),
+        ],
+      ),
+    );
+  }
+}
+
+// TODO: для архивированного проекта должна быть доступна только кнопка удаления
 class _ProjectActionButton extends StatelessWidget {
+  final Project project;
+
+  const _ProjectActionButton({required this.project});
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<bool>(
+      icon: const Icon(Icons.more_vert),
+      itemBuilder: (context) {
+        return [
+          const PopupMenuItem<bool>(
+            value: true,
+            child: Text("Архивировать"),
+          ),
+          const PopupMenuItem<bool>(
+            value: false,
+            child: Text("Удалить", style: TextStyle(color: Colors.red)),
+          ),
+        ];
+      },
+      onSelected: (isArchive) {
+        context
+            .read<ProjectsBloc>()
+            .add(DeleteProjectEvent(project, isArchive));
+      },
+    );
+  }
+}
+
+class _ProjectStartButton extends StatelessWidget {
   final Project project;
   final bool isActive;
 
-  const _ProjectActionButton({required this.project, required this.isActive});
+  const _ProjectStartButton({required this.project, required this.isActive});
 
   @override
   Widget build(BuildContext context) {

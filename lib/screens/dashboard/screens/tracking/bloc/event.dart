@@ -29,3 +29,10 @@ class AddProjectEvent implements ProjectsEvent {
 
   AddProjectEvent(this.projectName);
 }
+
+class DeleteProjectEvent implements ProjectsEvent {
+  final Project project;
+  final bool isArchive;
+
+  DeleteProjectEvent(this.project, this.isArchive);
+}
