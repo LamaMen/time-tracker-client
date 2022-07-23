@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_tracker_client/core/setup/injectable.dart';
-import 'package:time_tracker_client/core/widgets/top_loader.dart';
+import 'package:time_tracker_client/core/widgets/widget_with_top_loader.dart';
 import 'package:time_tracker_client/screens/dashboard/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/users/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/users/widgets/actions_bar.dart';
@@ -46,11 +46,12 @@ class _UsersScreenState extends State<UsersScreen> {
           final failure = state is FetchFailedState ? state.failure : null;
           final isLoading = state is LoadUserState;
 
-          return SingleChildScrollView(
+          return WidgetWithTopLoader(
+            isLoading: isLoading,
+            failure: failure,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TopLoader(isLoading: isLoading, failure: failure),
                 if (state is UsersLoadedState) ...[
                   ActionsBar(
                     users: state.users.entries
@@ -58,7 +59,11 @@ class _UsersScreenState extends State<UsersScreen> {
                         .map((u) => u.key)
                         .toList(),
                   ),
-                  UsersTable(users: state.users),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: UsersTable(users: state.users),
+                    ),
+                  ),
                 ]
               ],
             ),

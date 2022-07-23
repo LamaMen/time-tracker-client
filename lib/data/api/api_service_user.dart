@@ -12,6 +12,9 @@ abstract class ApiServiceUser {
   @GET('/projects')
   Future<List<ProjectWithDuration>> fetchProjects();
 
+  @GET('/statistic/general')
+  Future<List<ProjectWithDuration>> fetchGeneralStatistic();
+
   @GET('/projects/in-work')
   Future<InWorkProject> inWorkProject();
 

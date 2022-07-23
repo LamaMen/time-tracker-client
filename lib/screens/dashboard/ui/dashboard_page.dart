@@ -16,6 +16,11 @@ class DashboardScreen extends StatefulWidget implements AutoRouteWrapper {
       label: 'Отслеживание времени',
     ),
     const RouteDestination(
+      route: StatisticRoute(),
+      icon: Icons.info_outline_rounded,
+      label: 'Статистика',
+    ),
+    const RouteDestination(
       route: UsersRoute(),
       icon: Icons.person,
       label: 'Пользователи',

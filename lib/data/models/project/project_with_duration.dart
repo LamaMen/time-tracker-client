@@ -33,10 +33,17 @@ class ProjectDuration {
 
   ProjectDuration(this.hours, this.minutes);
 
+  factory ProjectDuration.fromMinutes(int minutes) {
+    final hours = (minutes / 60).floor();
+    return ProjectDuration(hours, minutes - hours * 60);
+  }
+
   factory ProjectDuration.fromJson(Map<String, dynamic> json) =>
       _$ProjectDurationFromJson(json);
 
   bool get isEmpty => hours == 0 && minutes == 0;
+
+  int get onlyMinutes => hours * 60 + minutes;
 
   @override
   String toString() {
@@ -45,10 +52,7 @@ class ProjectDuration {
       result += '$hours ч ';
     }
 
-    if (minutes != 0) {
-      result += '$minutes м';
-    }
-
+    result += '$minutes м';
     return result;
   }
 }

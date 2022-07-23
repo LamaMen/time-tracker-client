@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "workshop-system-64c26"
-  }
+    "default": "workshop-system-64c26",
+    "time-tracker": "rem-time-tracker"
+  },
+  "targets": {},
+  "etags": {}
 }

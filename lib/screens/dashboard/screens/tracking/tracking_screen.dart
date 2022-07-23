@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_tracker_client/core/setup/injectable.dart';
-import 'package:time_tracker_client/core/widgets/top_loader.dart';
+import 'package:time_tracker_client/core/widgets/widget_with_top_loader.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
 import 'package:time_tracker_client/screens/dashboard/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/tracking/bloc/bloc.dart';
@@ -46,19 +46,22 @@ class _TrackingScreenState extends State<TrackingScreen> {
               ? ProjectsList(projects: state.projects)
               : null;
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              TopLoader(isLoading: isLoading, failure: failure),
-              Expanded(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: body,
+          return WidgetWithTopLoader(
+            isLoading: isLoading,
+            failure: failure,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: body,
+                  ),
                 ),
-              ),
-              if (user.role == UserRole.admin)
-                AddProjectButton(isActive: state is ProjectsLoadedState),
-            ],
+                if (user.role == UserRole.admin)
+                  AddProjectButton(isActive: state is ProjectsLoadedState),
+              ],
+            ),
           );
         },
       ),

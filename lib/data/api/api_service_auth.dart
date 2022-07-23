@@ -13,9 +13,9 @@ abstract class ApiServiceAuth {
   @GET('/users')
   Future<List<User>> fetchUsers();
 
-  @POST('/signin')
+  @POST('/sign-in')
   Future<Token> singIn(@Body() UserCredentials credentials);
 
-  @POST('/signup')
+  @POST('/sign-up')
   Future<Token> singUp(@Body() User user);
 }

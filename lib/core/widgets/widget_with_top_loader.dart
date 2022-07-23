@@ -1,6 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
 
+class WidgetWithTopLoader extends StatelessWidget {
+  final Failure? failure;
+  final bool isLoading;
+  final Widget child;
+
+  const WidgetWithTopLoader({
+    super.key,
+    this.failure,
+    required this.isLoading,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TopLoader(isLoading: isLoading, failure: failure),
+        Expanded(
+          child: SizedBox(
+            width: double.infinity,
+            child: child,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class TopLoader extends StatelessWidget {
   final Failure? failure;
   final bool isLoading;
