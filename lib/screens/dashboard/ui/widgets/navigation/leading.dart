@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:time_tracker_client/core/widgets/responsive_utils.dart';
 import 'package:time_tracker_client/screens/dashboard/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/ui/widgets/user_utils.dart';
 
@@ -40,7 +41,7 @@ class _LeadingState extends State<Leading> {
             ),
             child: Center(
               child: Text(
-                user.shortName,
+                context.isMobile ? user.toString() : user.shortName,
                 style: const TextStyle(color: Colors.white),
               ),
             ),

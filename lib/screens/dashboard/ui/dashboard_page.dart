@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:time_tracker_client/core/setup/app_router.gr.dart';
 import 'package:time_tracker_client/core/setup/injectable.dart';
 import 'package:time_tracker_client/screens/dashboard/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/ui/widgets/main_page.dart';
+import 'package:time_tracker_client/screens/dashboard/ui/widgets/navigation/navigation_controller.dart';
 
 class DashboardScreen extends StatefulWidget implements AutoRouteWrapper {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -30,21 +32,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<AuthBloc, AuthState>(
-        listenWhen: (_, state) => state is LogOutState,
-        listener: (context, state) =>
-            context.router.replaceAll([const LoginRoute()]),
-        builder: (context, state) {
-          if (state is UserState) {
-            return AutoRouter(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listenWhen: (_, state) => state is LogOutState,
+      listener: (ctx, state) => ctx.router.replaceAll([const LoginRoute()]),
+      builder: (context, state) {
+        if (state is UserState) {
+          return ChangeNotifierProvider(
+            create: (ctx) => NavigationController(),
+            child: AutoRouter(
               builder: (context, child) => MainPage(child: child),
-            );
-          }
+            ),
+          );
+        }
 
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      },
     );
   }
 }

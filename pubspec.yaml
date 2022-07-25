@@ -28,6 +28,7 @@ dependencies:
 
   intl: ^0.17.0
   table_sticky_headers: ^2.0.1
+  provider: ^6.0.3
 
 dev_dependencies:
   flutter_test:
