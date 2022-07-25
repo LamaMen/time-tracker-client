@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_tracker_client/data/models/project/project.dart';
 import 'package:time_tracker_client/data/models/project/project_with_duration.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/tracking/bloc/bloc.dart';
-import 'package:time_tracker_client/screens/dashboard/ui/widgets/admin_widget.dart';
+import 'package:time_tracker_client/screens/dashboard/ui/widgets/user_utils.dart';
 
 class ProjectsList extends StatelessWidget {
   final List<ProjectWithDuration> projects;

@@ -1,19 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
-import 'package:time_tracker_client/screens/dashboard/bloc/bloc.dart';
+import 'package:time_tracker_client/screens/dashboard/ui/widgets/navigation/leading.dart';
 
 class SideNavigation extends StatelessWidget {
-  final List<RouteDestination> destinations;
+  final List<RouteDestination> screens;
   final int selectedIndex;
-  final User user;
 
   const SideNavigation({
     Key? key,
-    required this.destinations,
+    required this.screens,
     required this.selectedIndex,
-    required this.user,
   }) : super(key: key);
 
   @override
@@ -24,73 +21,13 @@ class SideNavigation extends StatelessWidget {
       color: Theme.of(context).primaryColor,
       child: Column(
         children: <Widget>[
-          _Leading(user: user),
-          for (int i = 0; i < destinations.length; i += 1)
+          const Leading(),
+          for (int i = 0; i < screens.length; i += 1)
             _RouteWidget(
-              destination: destinations[i],
+              destination: screens[i],
               isSelected: i == selectedIndex,
             ),
         ],
-      ),
-    );
-  }
-}
-
-class _Leading extends StatelessWidget {
-  final User user;
-
-  const _Leading({Key? key, required this.user}) : super(key: key);
-
-  String get usernameShort =>
-      user.name.toUpperCase().substring(0, 1) +
-      user.surname.toUpperCase().substring(0, 1);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      height: 72,
-      color: Theme.of(context).primaryColorDark,
-      child: GestureDetector(
-        onTap: () => showDialog<bool>(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Выход'),
-              content: const Text('Вы уверены что хотите выйти?'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('Нет'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('Да'),
-                ),
-              ],
-            );
-          },
-        ).then((isExit) {
-          if (isExit == true) {
-            context.read<AuthBloc>().add(const LogOutEvent());
-
-          }
-        }),
-        child: Tooltip(
-          message: 'Выход',
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Center(
-              child: Text(
-                usernameShort,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

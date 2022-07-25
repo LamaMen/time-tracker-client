@@ -6,7 +6,7 @@ import 'package:time_tracker_client/core/widgets/widget_with_top_loader.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/tracking/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/tracking/widgets/add_project_button.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/tracking/widgets/projects_list.dart';
-import 'package:time_tracker_client/screens/dashboard/ui/widgets/admin_widget.dart';
+import 'package:time_tracker_client/screens/dashboard/ui/widgets/user_utils.dart';
 
 class TrackingScreen extends StatefulWidget implements AutoRouteWrapper {
   const TrackingScreen({super.key});

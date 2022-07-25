@@ -29,6 +29,10 @@ class User {
   String toString() {
     return "$surname $name";
   }
+
+  String get shortName =>
+      name.toUpperCase().substring(0, 1) +
+      surname.toUpperCase().substring(0, 1);
 }
 
 enum UserRole {

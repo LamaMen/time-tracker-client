@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_tracker_client/core/setup/injectable.dart';
 import 'package:time_tracker_client/core/widgets/widget_with_top_loader.dart';
-import 'package:time_tracker_client/screens/dashboard/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/users/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/users/widgets/actions_bar.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/users/widgets/users_table.dart';
@@ -44,7 +43,7 @@ class _UsersScreenState extends State<UsersScreen> {
         },
         builder: (context, state) {
           final failure = state is FetchFailedState ? state.failure : null;
-          final isLoading = state is LoadUserState;
+          final isLoading = state is FetchUserState;
 
           return WidgetWithTopLoader(
             isLoading: isLoading,
