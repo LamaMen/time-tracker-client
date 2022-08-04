@@ -25,9 +25,15 @@ class StopSessionEvent implements ProjectsEvent {
 }
 
 class AddProjectEvent implements ProjectsEvent {
-  final String projectName;
+  final Project project;
 
-  AddProjectEvent(this.projectName);
+  AddProjectEvent(this.project);
+}
+
+class UpdateProjectEvent implements ProjectsEvent {
+  final Project project;
+
+  UpdateProjectEvent(this.project);
 }
 
 class DeleteProjectEvent implements ProjectsEvent {
@@ -35,4 +41,10 @@ class DeleteProjectEvent implements ProjectsEvent {
   final bool isArchive;
 
   DeleteProjectEvent(this.project, this.isArchive);
+}
+
+class ChangeFlagEvent implements ProjectsEvent {
+  final bool isFull;
+
+  const ChangeFlagEvent(this.isFull);
 }

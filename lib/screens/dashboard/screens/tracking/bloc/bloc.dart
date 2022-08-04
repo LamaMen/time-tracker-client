@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
 import 'package:time_tracker_client/data/models/project/project.dart';
-import 'package:time_tracker_client/data/models/project/project_with_duration.dart';
+import 'package:time_tracker_client/domain/models/project/project_with_duration.dart';
 import 'package:time_tracker_client/domain/repository/projects/projects_repository.dart';
 import 'package:time_tracker_client/domain/repository/sessions/sessions_repository.dart';
 import 'package:time_tracker_client/domain/usecase/projects/project_opened_usecase.dart';
@@ -25,13 +25,15 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     this._projectOpenedUseCase,
     this._sessionsRepository,
     this._projectsRepository,
-  ) : super(FetchProjectsState.initial()) {
+  ) : super(FetchProjectsState.initial(false)) {
     on<LoadProjectsEvent>(_onUpdateProjects);
     on<StartSessionEvent>(_onStartSession);
     on<StopSessionEvent>(_onStopSession);
     on<AddProjectEvent>(_onAddProject);
+    on<UpdateProjectEvent>(_onUpdateProject);
     on<DeleteProjectEvent>(_onDeleteProject);
     on<_UpdateProjectsEvent>(_onUpdateProjects);
+    on<ChangeFlagEvent>(_onChangeFlag);
 
     timer = Timer.periodic(const Duration(seconds: 15), (_) => _updateScreen());
   }
@@ -48,10 +50,10 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
       emit(FetchProjectsState.load(state as ProjectsLoadedState));
     }
 
-    final projects = await _projectOpenedUseCase();
+    final projects = await _projectOpenedUseCase(state.isFull);
     emit(projects.fold(
-      (f) => FetchFailedState(f),
-      (u) => ProjectsLoadedState(u),
+      (f) => FetchFailedState(f, state.isFull),
+      (u) => ProjectsLoadedState(u, state.isFull),
     ));
   }
 
@@ -75,8 +77,15 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     AddProjectEvent event,
     Emitter<ProjectsState> emit,
   ) async {
-    final project = Project(-1, event.projectName);
-    await _projectsRepository.addProject(project);
+    await _projectsRepository.addProject(event.project);
+    add(_UpdateProjectsEvent(false));
+  }
+
+  Future<void> _onUpdateProject(
+    UpdateProjectEvent event,
+    Emitter<ProjectsState> emit,
+  ) async {
+    await _projectsRepository.updateProject(event.project);
     add(_UpdateProjectsEvent(false));
   }
 
@@ -85,6 +94,14 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     Emitter<ProjectsState> emit,
   ) async {
     await _projectsRepository.deleteProject(event.project, event.isArchive);
+    add(_UpdateProjectsEvent(false));
+  }
+
+  Future<void> _onChangeFlag(
+    ChangeFlagEvent event,
+    Emitter<ProjectsState> emit,
+  ) async {
+    emit(FetchProjectsState.initial(event.isFull));
     add(_UpdateProjectsEvent(false));
   }
 

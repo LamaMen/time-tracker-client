@@ -7,6 +7,7 @@ import 'package:time_tracker_client/core/failure/failure.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
 import 'package:time_tracker_client/domain/repository/auth/auth_repository.dart';
 import 'package:time_tracker_client/domain/repository/auth/users_repository.dart';
+import 'package:time_tracker_client/domain/usecase/progress/progress_filters.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/statistic/tabs/tab_type.dart';
 
 part 'event.dart';
@@ -20,6 +21,7 @@ class StatisticBloc extends Bloc<StatisticEvent, StatisticState> {
   StatisticBloc(this._authRepository, this._usersRepository)
       : super(const LoadingState()) {
     on<UpdateTabs>(onUpdateTabs);
+    on<UpdateFilters>(onUpdateFilters);
   }
 
   Future<void> onUpdateTabs(
@@ -35,7 +37,7 @@ class StatisticBloc extends Bloc<StatisticEvent, StatisticState> {
       emit(_mapUsersToStatistic(users, tabs));
     } else {
       tabs.add(SelfStatisticTab(user));
-      emit(WithListState(tabs));
+      emit(WithTabsState(tabs, ProgressFilters.initial()));
     }
   }
 
@@ -49,8 +51,17 @@ class StatisticBloc extends Bloc<StatisticEvent, StatisticState> {
         for (var user in u) {
           tabs.add(UserStatisticTab(user));
         }
-        return WithListState(tabs);
+        return WithTabsState(tabs, ProgressFilters.initial());
       },
     );
+  }
+
+  Future<void> onUpdateFilters(
+    UpdateFilters event,
+    Emitter<StatisticState> emit,
+  ) async {
+    if (state is! WithTabsState) return;
+    final current = state as WithTabsState;
+    emit(WithTabsState(current.tabs, event.filters));
   }
 }

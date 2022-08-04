@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker_client/domain/usecase/statistic/general_statistic.dart';
+import 'package:time_tracker_client/domain/usecase/progress/general_statistic.dart';
 
 class GeneralStatisticTable extends StatelessWidget {
   final GeneralStatistic statistic;
@@ -41,8 +41,8 @@ class GeneralStatisticTable extends StatelessWidget {
 
     for (var progress in statistic.projectProgress) {
       rows.add(_GeneralStatisticRow(
-        progress.project.name,
-        progress.duration.toString(),
+        progress.project,
+        progress.duration,
         progress.formattedPercent,
       ));
     }

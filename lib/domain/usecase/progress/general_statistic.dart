@@ -1,4 +1,4 @@
-import 'package:time_tracker_client/data/models/project/project_with_duration.dart';
+import 'package:time_tracker_client/data/models/progress/project_duration.dart';
 
 class GeneralStatistic {
   final List<ProjectProgress> projectProgress;
@@ -10,12 +10,14 @@ class GeneralStatistic {
   String get formattedPercent => totalPercent.toStringAsFixed(2);
 }
 
-class ProjectProgress extends ProjectWithDuration {
+class ProjectProgress {
+  final String project;
+  final String duration;
   final double percent;
 
-  ProjectProgress(ProjectWithDuration project, int total)
-      : percent = project.duration.onlyMinutes * 100 / total,
-        super(project.project, project.duration);
+  ProjectProgress(this.project, ProjectDuration duration, int total)
+      : percent = total != 0 ? duration.onlyMinutes * 100 / total : 0,
+        duration = duration.toString();
 
   String get formattedPercent => percent.toStringAsFixed(2);
 }

@@ -12,8 +12,9 @@ class FailedState implements StatisticState {
   const FailedState(this.failure);
 }
 
-class WithListState implements StatisticState {
-  final List<TabType> statistics;
+class WithTabsState implements StatisticState {
+  final List<TabType> tabs;
+  final ProgressFilters filters;
 
-  WithListState(this.statistics);
+  const WithTabsState(this.tabs, this.filters);
 }

@@ -35,14 +35,14 @@ class _StatisticScreenState extends State<StatisticScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<StatisticBloc, StatisticState>(
       builder: (context, state) {
-        if (state is WithListState) {
+        if (state is WithTabsState) {
           return TabsWidget(
-            tabs: state.statistics.map((s) {
+            tabs: state.tabs.map((s) {
               return TabInfo(
                 label: s.label,
                 child: s is UserStatisticTab
-                    ? UserTab(user: s.user)
-                    : const GeneralTab(),
+                    ? UserTab(user: s.user, filters: state.filters)
+                    : GeneralTab(filters: state.filters),
               );
             }).toList(),
           );

@@ -1,30 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:time_tracker_client/data/models/project/project.dart';
 
-part 'project_with_duration.g.dart';
-
-@JsonSerializable(createToJson: false)
-class ProjectWithDuration {
-  final Project project;
-  final ProjectDuration duration;
-
-  ProjectWithDuration(this.project, this.duration);
-
-  factory ProjectWithDuration.fromJson(Map<String, dynamic> json) =>
-      _$ProjectWithDurationFromJson(json);
-
-  ProjectWithDuration updateProject(Project project) {
-    return ProjectWithDuration(project, duration);
-  }
-
-  String get formattedDuration {
-    if (duration.isEmpty) {
-      return 'Не начато';
-    }
-
-    return 'В работе: ${duration.toString()}';
-  }
-}
+part 'project_duration.g.dart';
 
 @JsonSerializable(createToJson: false)
 class ProjectDuration {
@@ -36,6 +12,10 @@ class ProjectDuration {
   factory ProjectDuration.fromMinutes(int minutes) {
     final hours = (minutes / 60).floor();
     return ProjectDuration(hours, minutes - hours * 60);
+  }
+
+  factory ProjectDuration.empty() {
+    return ProjectDuration(0, 0);
   }
 
   factory ProjectDuration.fromJson(Map<String, dynamic> json) =>

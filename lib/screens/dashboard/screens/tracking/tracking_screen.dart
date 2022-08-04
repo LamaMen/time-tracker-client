@@ -5,6 +5,7 @@ import 'package:time_tracker_client/core/setup/injectable.dart';
 import 'package:time_tracker_client/core/widgets/widget_with_top_loader.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/tracking/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/tracking/widgets/add_project_button.dart';
+import 'package:time_tracker_client/screens/dashboard/screens/tracking/widgets/projects_filter.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/tracking/widgets/projects_list.dart';
 import 'package:time_tracker_client/screens/dashboard/ui/widgets/user_utils.dart';
 
@@ -48,19 +49,50 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                const _Header(),
                 Expanded(
                   child: SizedBox(
                     width: double.infinity,
                     child: body,
                   ),
                 ),
-                AddProjectButton(isActive: state is ProjectsLoadedState)
-                    .onlyAdmin(context),
+                _Footer(state: state),
               ],
             ),
           );
         },
       ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: const [
+        ProjectsFilter(),
+      ],
+    );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  final ProjectsState state;
+
+  const _Footer({required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        AddProjectButton(isActive: state is ProjectsLoadedState)
+            .onlyAdmin(context)
+      ],
     );
   }
 }

@@ -1,28 +1,32 @@
 part of 'bloc.dart';
 
 @immutable
-class ProjectsState {}
+class ProjectsState {
+  final bool isFull;
 
-class FetchFailedState implements ProjectsState {
-  final Failure failure;
-
-  const FetchFailedState(this.failure);
+  const ProjectsState(this.isFull);
 }
 
-class ProjectsLoadedState implements ProjectsState {
+class FetchFailedState extends ProjectsState {
+  final Failure failure;
+
+  const FetchFailedState(this.failure, super.isFull);
+}
+
+class ProjectsLoadedState extends ProjectsState {
   final List<ProjectWithDuration> projects;
 
-  const ProjectsLoadedState(this.projects);
+  const ProjectsLoadedState(this.projects, super.isFull);
 }
 
 class FetchProjectsState extends ProjectsLoadedState {
-  FetchProjectsState(super.projects);
+  const FetchProjectsState(super.projects, super.isFull);
 
-  factory FetchProjectsState.initial() {
-    return FetchProjectsState([]);
+  factory FetchProjectsState.initial(bool isFull) {
+    return FetchProjectsState(const [], isFull);
   }
 
   factory FetchProjectsState.load(ProjectsLoadedState state) {
-    return FetchProjectsState(state.projects);
+    return FetchProjectsState(state.projects, state.isFull);
   }
 }

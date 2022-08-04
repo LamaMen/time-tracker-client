@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker_client/domain/usecase/statistic/general_statistic.dart';
+import 'package:time_tracker_client/domain/usecase/progress/general_statistic.dart';
 
 class GeneralStatisticList extends StatelessWidget {
   final GeneralStatistic statistic;
@@ -43,8 +43,8 @@ class _Item extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
-        title: Text(item.project.name),
-        subtitle: Text('${item.duration}'),
+        title: Text(item.project),
+        subtitle: Text(item.duration),
         trailing: Text('${item.formattedPercent} %'),
         tileColor: Colors.white,
         shape: RoundedRectangleBorder(

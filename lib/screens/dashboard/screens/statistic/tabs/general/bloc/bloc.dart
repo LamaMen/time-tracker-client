@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
-import 'package:time_tracker_client/domain/usecase/statistic/general_statistic.dart';
-import 'package:time_tracker_client/domain/usecase/statistic/statistic_usecase.dart';
+import 'package:time_tracker_client/domain/usecase/progress/general_statistic.dart';
+import 'package:time_tracker_client/domain/usecase/progress/progress_filters.dart';
+import 'package:time_tracker_client/domain/usecase/progress/statistic_usecase.dart';
 
 part 'event.dart';
 
@@ -20,7 +21,7 @@ class GeneralStatBloc extends Bloc<GeneralStatEvent, GeneralStatState> {
 
   Future<void> onGet(GetStatistic event, Emitter<GeneralStatState> emit) async {
     emit(const LoadingState());
-    final statistic = await _statisticUsecase.getGeneral();
+    final statistic = await _statisticUsecase.getGeneral(event.filters);
     emit(statistic.fold(
       (f) => FailedState(f),
       (s) => WithStatisticState(s),
