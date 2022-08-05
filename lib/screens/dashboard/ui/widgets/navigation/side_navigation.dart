@@ -15,20 +15,22 @@ class SideNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      width: context.isDesktop ? 72 : null,
-      elevation: 0,
-      child: Container(
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          children: <Widget>[
-            const Leading(),
-            for (int i = 0; i < screens.length; i += 1)
-              RouteWidget(
-                destination: screens[i],
-                isSelected: i == selectedIndex,
-              ),
-          ],
+    return SafeArea(
+      child: Drawer(
+        width: context.isDesktop ? 72 : null,
+        elevation: 0,
+        child: Container(
+          color: Theme.of(context).primaryColor,
+          child: Column(
+            children: <Widget>[
+              const Leading(),
+              for (int i = 0; i < screens.length; i += 1)
+                RouteWidget(
+                  destination: screens[i],
+                  isSelected: i == selectedIndex,
+                ),
+            ],
+          ),
         ),
       ),
     );

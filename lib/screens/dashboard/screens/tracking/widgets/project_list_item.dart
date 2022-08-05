@@ -33,7 +33,7 @@ class _ProjectActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 72,
+      width: 64,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -57,49 +57,52 @@ class _ProjectActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<_PopupAction>(
-      icon: const Icon(Icons.more_vert),
-      itemBuilder: (context) {
-        return [
-          const PopupMenuItem<_PopupAction>(
-            value: _PopupAction.edit,
-            child: Text("Редактировать"),
-          ),
-          if (!project.isArchive) ...[
+    return SizedBox(
+      width: 32,
+      child: PopupMenuButton<_PopupAction>(
+        icon: const Icon(Icons.more_vert),
+        itemBuilder: (context) {
+          return [
             const PopupMenuItem<_PopupAction>(
-              value: _PopupAction.archive,
-              child: Text("Архивировать"),
-            )
-          ],
-          const PopupMenuItem<_PopupAction>(
-            value: _PopupAction.delete,
-            child: Text("Удалить", style: TextStyle(color: Colors.red)),
-          ),
-        ];
-      },
-      onSelected: (action) {
-        if (action == _PopupAction.archive || action == _PopupAction.delete) {
-          context
-              .read<ProjectsBloc>()
-              .add(DeleteProjectEvent(project, action == _PopupAction.archive));
-        }
+              value: _PopupAction.edit,
+              child: Text("Редактировать"),
+            ),
+            if (!project.isArchive) ...[
+              const PopupMenuItem<_PopupAction>(
+                value: _PopupAction.archive,
+                child: Text("Архивировать"),
+              )
+            ],
+            const PopupMenuItem<_PopupAction>(
+              value: _PopupAction.delete,
+              child: Text("Удалить", style: TextStyle(color: Colors.red)),
+            ),
+          ];
+        },
+        onSelected: (action) {
+          if (action == _PopupAction.archive || action == _PopupAction.delete) {
+            context
+                .read<ProjectsBloc>()
+                .add(DeleteProjectEvent(project, action == _PopupAction.archive));
+          }
 
-        if (action == _PopupAction.edit) {
-          showDialog<Project>(
-            context: context,
-            builder: (context) {
-              return BlocProvider<EditProjectBloc>(
-                create: (_) => getIt<EditProjectBloc>(param1: project),
-                child: const EditProjectDialog(),
-              );
-            },
-          ).then((project) {
-            if (project != null) {
-              context.read<ProjectsBloc>().add(UpdateProjectEvent(project));
-            }
-          });
-        }
-      },
+          if (action == _PopupAction.edit) {
+            showDialog<Project>(
+              context: context,
+              builder: (context) {
+                return BlocProvider<EditProjectBloc>(
+                  create: (_) => getIt<EditProjectBloc>(param1: project),
+                  child: const EditProjectDialog(),
+                );
+              },
+            ).then((project) {
+              if (project != null) {
+                context.read<ProjectsBloc>().add(UpdateProjectEvent(project));
+              }
+            });
+          }
+        },
+      ),
     );
   }
 }

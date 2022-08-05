@@ -19,7 +19,7 @@ class SimpleButton extends StatelessWidget {
     double? borderRadius,
     EdgeInsetsGeometry? padding,
   })  : borderRadius = borderRadius ?? 12,
-        padding = padding ?? const EdgeInsets.all(16),
+        padding = padding ?? const EdgeInsets.symmetric(horizontal: 16),
         super(key: key);
 
   @override

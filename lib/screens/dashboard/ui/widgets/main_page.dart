@@ -50,19 +50,21 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       drawer: SideNavigation(screens: s, selectedIndex: selectedIndex),
       key: Provider.of<NavigationController>(context, listen: false).key,
-      body: Row(
-        children: [
-          SideNavigation(screens: s, selectedIndex: selectedIndex)
-              .onlyDesktop(context),
-          Expanded(
-            child: Column(
-              children: [
-                TopBar(label: s[selectedIndex].label),
-                Expanded(child: child),
-              ],
+      body: SafeArea(
+        child: Row(
+          children: [
+            SideNavigation(screens: s, selectedIndex: selectedIndex)
+                .onlyDesktop(context),
+            Expanded(
+              child: Column(
+                children: [
+                  TopBar(label: s[selectedIndex].label),
+                  Expanded(child: child),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

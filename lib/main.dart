@@ -8,6 +8,7 @@ import 'package:time_tracker_client/core/theme/colors.dart';
 import 'package:time_tracker_client/core/theme/fonts.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies(kDebugMode ? 'dev' : 'prod');
   runApp(MyApp());
 }
