@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
-import 'package:time_tracker_client/domain/usecase/progress/progress_filters.dart';
+import 'package:time_tracker_client/domain/models/progress/progress_filters.dart';
 
 part 'event.dart';
 

@@ -7,10 +7,11 @@ import 'package:time_tracker_client/core/failure/failure.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
 import 'package:time_tracker_client/domain/repository/auth/auth_repository.dart';
 import 'package:time_tracker_client/domain/repository/auth/users_repository.dart';
-import 'package:time_tracker_client/domain/usecase/progress/progress_filters.dart';
+import 'package:time_tracker_client/domain/models/progress/progress_filters.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/statistic/tabs/tab_type.dart';
 
 part 'event.dart';
+
 part 'state.dart';
 
 @injectable
@@ -36,7 +37,7 @@ class StatisticBloc extends Bloc<StatisticEvent, StatisticState> {
       final users = await _usersRepository.fetchUsers();
       emit(_mapUsersToStatistic(users, tabs));
     } else {
-      tabs.add(SelfStatisticTab(user));
+      tabs.add(const SelfStatisticTab());
       emit(WithTabsState(tabs, ProgressFilters.initial()));
     }
   }

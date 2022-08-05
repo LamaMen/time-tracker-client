@@ -12,8 +12,8 @@ class FailedState implements GeneralStatState {
   const FailedState(this.failure);
 }
 
-class WithStatisticState implements GeneralStatState {
-  final GeneralStatistic statistics;
+class WithProgressState implements GeneralStatState {
+  final GeneralProgress statistics;
 
-  WithStatisticState(this.statistics);
+  WithProgressState(this.statistics);
 }

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_tracker_client/core/setup/injectable.dart';
 import 'package:time_tracker_client/core/widgets/responsive_utils.dart';
 import 'package:time_tracker_client/core/widgets/widget_with_top_loader.dart';
-import 'package:time_tracker_client/domain/usecase/progress/progress_filters.dart';
+import 'package:time_tracker_client/domain/models/progress/progress_filters.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/statistic/tabs/general/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/statistic/tabs/general/widgets/general_statistic_list.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/statistic/tabs/general/widgets/general_statistic_table.dart';
@@ -25,18 +25,8 @@ class GeneralTab extends StatelessWidget {
   }
 }
 
-class _GeneralTabBody extends StatefulWidget {
+class _GeneralTabBody extends StatelessWidget {
   const _GeneralTabBody();
-
-  @override
-  State<_GeneralTabBody> createState() => _GeneralTabBodyState();
-}
-
-class _GeneralTabBodyState extends State<_GeneralTabBody> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +36,7 @@ class _GeneralTabBodyState extends State<_GeneralTabBody> {
         final isLoading = state is LoadingState;
         final Widget child;
 
-        if (state is WithStatisticState) {
+        if (state is WithProgressState) {
           child = ResponsiveWidget(
             mobile: GeneralStatisticList(state.statistics),
             desktop: GeneralStatisticTable(state.statistics),
@@ -61,7 +51,6 @@ class _GeneralTabBodyState extends State<_GeneralTabBody> {
           child: child,
         );
       },
-      // ),
     );
   }
 }

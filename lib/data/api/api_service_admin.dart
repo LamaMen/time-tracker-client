@@ -36,6 +36,12 @@ abstract class ApiServiceAdmin {
 
   @GET('/progress/general')
   Future<List<Progress>> fetchGeneralProgress(
-    @Queries() Map<String, String?> range,
+    @Queries() Map<String, String> range,
+  );
+
+  @GET('/progress/{id}')
+  Future<Map<String, List<Progress>>> fetchProgress(
+    @Path('id') String id,
+    @Queries() Map<String, String> range,
   );
 }

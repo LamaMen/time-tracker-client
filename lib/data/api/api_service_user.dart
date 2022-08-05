@@ -12,15 +12,14 @@ abstract class ApiServiceUser {
   @GET('/projects')
   Future<List<Project>> fetchProjects(@Query("isFull") bool isFull);
 
-  // @GET('/progress/general')
-  // Future<List<Progress>> fetchGeneralProgressByPeriod(
-  //   @Query('start') String start,
-  //   @Query('start') String end,
-  // );
-
   @GET('/progress/general')
   Future<List<Progress>> fetchGeneralProgress(
-    @Queries() Map<String, String?> range,
+    @Queries() Map<String, String> range,
+  );
+
+  @GET('/progress')
+  Future<Map<String, List<Progress>>> fetchProgress(
+    @Queries() Map<String, String> range,
   );
 
   @GET('/progress/today')

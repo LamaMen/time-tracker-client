@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
@@ -17,13 +18,12 @@ class ProgressRepository {
 
   Future<Either<Failure, List<Progress>>> fetchGeneral(
     bool isAdmin,
-    DateTime? startDate,
-    DateTime? endDate,
+    DateTimeRange? timeRange,
   ) async {
     final range = <String, String>{};
-    if (startDate != null) {
-      range['start'] = format.format(startDate);
-      range['end'] = format.format(endDate!);
+    if (timeRange != null) {
+      range['start'] = format.format(timeRange.start);
+      range['end'] = format.format(timeRange.end);
     }
 
     try {
@@ -34,6 +34,43 @@ class ProgressRepository {
       } else {
         final api = _provider.getUserService();
         final answer = await api.fetchGeneralProgress(range);
+        return Right(answer);
+      }
+    } on DioError catch (e) {
+      if (e.error is SocketException || e.error.contains('XMLHttpRequest')) {
+        return const Left(NoInternetFailure());
+      }
+
+      switch (e.response?.statusCode) {
+        case HttpStatus.internalServerError:
+        case HttpStatus.badGateway:
+          return const Left(ServerFailure());
+        case HttpStatus.unauthorized:
+          return const Left(WrongCredentialsFailure());
+      }
+
+      return const Left(UnknownFailure());
+    }
+  }
+
+  Future<Either<Failure, Map<String, List<Progress>>>> fetchProgress(
+    String? userId,
+    DateTimeRange? timeRange,
+  ) async {
+    final range = <String, String>{};
+    if (timeRange != null) {
+      range['start'] = format.format(timeRange.start);
+      range['end'] = format.format(timeRange.end);
+    }
+
+    try {
+      if (userId != null) {
+        final api = _provider.getAdminService();
+        final answer = await api.fetchProgress(userId, range);
+        return Right(answer);
+      } else {
+        final api = _provider.getUserService();
+        final answer = await api.fetchProgress(range);
         return Right(answer);
       }
     } on DioError catch (e) {

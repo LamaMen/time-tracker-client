@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker_client/domain/usecase/progress/general_statistic.dart';
+import 'package:time_tracker_client/domain/models/progress/general_statistic.dart';
 
 class GeneralStatisticList extends StatelessWidget {
-  final GeneralStatistic statistic;
+  final GeneralProgress statistic;
 
   const GeneralStatisticList(this.statistic, {super.key});
 

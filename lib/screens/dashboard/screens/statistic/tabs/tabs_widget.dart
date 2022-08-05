@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:time_tracker_client/core/setup/injectable.dart';
 import 'package:time_tracker_client/core/widgets/responsive_utils.dart';
-import 'package:time_tracker_client/domain/usecase/progress/progress_filters.dart';
+import 'package:time_tracker_client/domain/models/progress/progress_filters.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/statistic/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/statistic/tabs/filters/bloc/bloc.dart';
 import 'package:time_tracker_client/screens/dashboard/screens/statistic/tabs/filters/filtres_dialog.dart';

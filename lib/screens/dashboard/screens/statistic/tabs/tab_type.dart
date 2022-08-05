@@ -12,7 +12,7 @@ class GeneralStatisticTab implements TabType {
 }
 
 class UserStatisticTab implements TabType {
-  final User user;
+  final User? user;
 
   const UserStatisticTab(this.user);
 
@@ -21,7 +21,7 @@ class UserStatisticTab implements TabType {
 }
 
 class SelfStatisticTab extends UserStatisticTab {
-  const SelfStatisticTab(super.user);
+  const SelfStatisticTab() : super(null);
 
   @override
   String get label => 'Своя статистика';

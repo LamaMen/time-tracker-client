@@ -19,12 +19,7 @@ class WidgetWithTopLoader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TopLoader(isLoading: isLoading, failure: failure),
-        Expanded(
-          child: SizedBox(
-            width: double.infinity,
-            child: child,
-          ),
-        ),
+        Expanded(child: child),
       ],
     );
   }

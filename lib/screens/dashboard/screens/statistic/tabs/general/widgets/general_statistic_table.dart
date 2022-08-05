@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker_client/domain/usecase/progress/general_statistic.dart';
+import 'package:time_tracker_client/domain/models/progress/general_statistic.dart';
 
 class GeneralStatisticTable extends StatelessWidget {
-  final GeneralStatistic statistic;
+  final GeneralProgress statistic;
 
   const GeneralStatisticTable(
     this.statistic, {
@@ -12,26 +12,21 @@ class GeneralStatisticTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DataTable(
-            headingRowHeight: 28,
-            headingRowColor: MaterialStateProperty.all(
-              const Color.fromRGBO(250, 250, 250, 1),
-            ),
-            border: TableBorder.symmetric(
-              outside:
-                  const BorderSide(color: Color.fromRGBO(220, 220, 220, 1)),
-            ),
-            columns: const <DataColumn>[
-              DataColumn(label: Text('Наименование')),
-              DataColumn(label: Text('В ч')),
-              DataColumn(label: Text('В %')),
-            ],
-            rows: _rows,
-          ),
+      child: DataTable(
+        headingRowHeight: 28,
+        headingRowColor: MaterialStateProperty.all(
+          const Color.fromRGBO(250, 250, 250, 1),
+        ),
+        border: TableBorder.symmetric(
+          outside:
+              const BorderSide(color: Color.fromRGBO(220, 220, 220, 1)),
+        ),
+        columns: const <DataColumn>[
+          DataColumn(label: Text('Наименование')),
+          DataColumn(label: Text('В ч')),
+          DataColumn(label: Text('В %')),
         ],
+        rows: _rows,
       ),
     );
   }
