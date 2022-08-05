@@ -1,19 +1,30 @@
 part of 'bloc.dart';
 
-abstract class ProgressState {}
+abstract class ProgressState {
+  final User? user;
+  final ProgressFilters? filters;
 
-class LoadingState implements ProgressState {
-  const LoadingState();
+  const ProgressState(this.user, this.filters);
 }
 
-class FailedState implements ProgressState {
+class LoadingState extends ProgressState {
+  const LoadingState(super.user, super.filters);
+
+  factory LoadingState.fromState(ProgressState state) {
+    return LoadingState(state.user, state.filters);
+  }
+}
+
+class FailedState extends ProgressState {
   final Failure failure;
 
-  const FailedState(this.failure);
+  FailedState(this.failure, ProgressState state)
+      : super(state.user, state.filters);
 }
 
-class WithProgressState implements ProgressState {
+class WithProgressState extends ProgressState {
   final UserProgress progress;
 
-  WithProgressState(this.progress);
+  WithProgressState(this.progress, ProgressState state)
+      : super(state.user, state.filters);
 }

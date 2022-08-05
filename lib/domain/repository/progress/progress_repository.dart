@@ -4,15 +4,15 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:intl/intl.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
+import 'package:time_tracker_client/core/utils/date_utils.dart';
 import 'package:time_tracker_client/data/api/api_provider.dart';
+import 'package:time_tracker_client/data/models/progress/amendment.dart';
 import 'package:time_tracker_client/data/models/progress/progress.dart';
 
 @singleton
 class ProgressRepository {
   final ApiProvider _provider;
-  final format = DateFormat('yyyy-MM-dd');
 
   ProgressRepository(this._provider);
 
@@ -20,20 +20,16 @@ class ProgressRepository {
     bool isAdmin,
     DateTimeRange? timeRange,
   ) async {
-    final range = <String, String>{};
-    if (timeRange != null) {
-      range['start'] = format.format(timeRange.start);
-      range['end'] = format.format(timeRange.end);
-    }
+    Map<String, String> params = convertToParams(timeRange);
 
     try {
       if (isAdmin) {
         final api = _provider.getAdminService();
-        final answer = await api.fetchGeneralProgress(range);
+        final answer = await api.fetchGeneralProgress(params);
         return Right(answer);
       } else {
         final api = _provider.getUserService();
-        final answer = await api.fetchGeneralProgress(range);
+        final answer = await api.fetchGeneralProgress(params);
         return Right(answer);
       }
     } on DioError catch (e) {
@@ -57,11 +53,7 @@ class ProgressRepository {
     String? userId,
     DateTimeRange? timeRange,
   ) async {
-    final range = <String, String>{};
-    if (timeRange != null) {
-      range['start'] = format.format(timeRange.start);
-      range['end'] = format.format(timeRange.end);
-    }
+    Map<String, String> range = convertToParams(timeRange);
 
     try {
       if (userId != null) {
@@ -73,6 +65,37 @@ class ProgressRepository {
         final answer = await api.fetchProgress(range);
         return Right(answer);
       }
+    } on DioError catch (e) {
+      if (e.error is SocketException || e.error.contains('XMLHttpRequest')) {
+        return const Left(NoInternetFailure());
+      }
+
+      switch (e.response?.statusCode) {
+        case HttpStatus.internalServerError:
+        case HttpStatus.badGateway:
+          return const Left(ServerFailure());
+        case HttpStatus.unauthorized:
+          return const Left(WrongCredentialsFailure());
+      }
+
+      return const Left(UnknownFailure());
+    }
+  }
+
+  Map<String, String> convertToParams(DateTimeRange? timeRange) {
+    final range = <String, String>{};
+    if (timeRange != null) {
+      range['start'] = dateFormatter.format(timeRange.start);
+      range['end'] = dateFormatter.format(timeRange.end);
+    }
+    return range;
+  }
+
+  Future<Either<Failure, void>> addAmendment(Amendment amendment) async {
+    final api = _provider.getAdminService();
+    try {
+      await api.addAmendment(amendment);
+      return const Right(null);
     } on DioError catch (e) {
       if (e.error is SocketException || e.error.contains('XMLHttpRequest')) {
         return const Left(NoInternetFailure());

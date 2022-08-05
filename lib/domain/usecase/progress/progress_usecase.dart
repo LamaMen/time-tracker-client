@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
+import 'package:time_tracker_client/core/utils/date_utils.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
 import 'package:time_tracker_client/data/models/progress/progress.dart';
 import 'package:time_tracker_client/data/models/progress/project_duration.dart';
@@ -139,11 +140,4 @@ class ProgressUsecase {
       return MapEntry(date, durations);
     });
   }
-}
-
-DateTimeRange currentMonth() {
-  var now = DateTime.now();
-  var start = DateTime(now.year, now.month, 1);
-  var end = DateTime(now.year, now.month + 1, 0);
-  return DateTimeRange(start: start, end: end);
 }

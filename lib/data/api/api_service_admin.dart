@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:time_tracker_client/data/models/auth/full_user.dart';
+import 'package:time_tracker_client/data/models/progress/amendment.dart';
 import 'package:time_tracker_client/data/models/progress/progress.dart';
 import 'package:time_tracker_client/data/models/project/project.dart';
 
@@ -44,4 +45,7 @@ abstract class ApiServiceAdmin {
     @Path('id') String id,
     @Queries() Map<String, String> range,
   );
+
+  @POST('/amendment')
+  Future<void> addAmendment(@Body() Amendment amendment);
 }

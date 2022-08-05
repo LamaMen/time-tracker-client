@@ -15,4 +15,9 @@ class Project {
       _$ProjectFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProjectToJson(this);
+
+  @override
+  String toString() {
+    return name;
+  }
 }
