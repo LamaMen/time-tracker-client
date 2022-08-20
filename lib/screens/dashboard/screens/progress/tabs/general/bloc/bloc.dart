@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
-import 'package:time_tracker_client/domain/models/progress/general_statistic.dart';
+import 'package:time_tracker_client/domain/models/progress/general_progress.dart';
 import 'package:time_tracker_client/domain/models/progress/progress_filters.dart';
 import 'package:time_tracker_client/domain/usecase/progress/progress_usecase.dart';
 

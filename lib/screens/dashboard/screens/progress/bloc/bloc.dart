@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';

@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
 import 'package:time_tracker_client/data/api/api_provider.dart';
 import 'package:time_tracker_client/data/models/auth/full_user.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
-import 'package:dartz/dartz.dart';
 
 @singleton
 class UsersRepository {

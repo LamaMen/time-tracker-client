@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -55,9 +54,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     emit(FetchUserState.load(state as UsersLoadedState));
 
     final result = await _usersRepository.saveUser(event.user);
-    if (result.isLeft()) {
-      final failure = (result as Left<Failure, void>).value;
-      emit(EditUsersFailureState(state as UsersLoadedState, failure));
+    if (result.isLeft) {
+      emit(EditUsersFailureState(state as UsersLoadedState, result.left));
       return;
     }
 
@@ -73,9 +71,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     for (var user in event.users) {
       final result = await _usersRepository.deleteUser(user);
 
-      if (result.isLeft()) {
-        final failure = (result as Left<Failure, void>).value;
-        emit(EditUsersFailureState(state as UsersLoadedState, failure));
+      if (result.isLeft) {
+        emit(EditUsersFailureState(state as UsersLoadedState, result.left));
         return;
       }
     }

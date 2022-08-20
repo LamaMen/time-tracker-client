@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
@@ -20,7 +20,7 @@ class ProgressRepository {
     bool isAdmin,
     DateTimeRange? timeRange,
   ) async {
-    Map<String, String> params = convertToParams(timeRange);
+    Map<String, String> params = _convertToParams(timeRange);
 
     try {
       if (isAdmin) {
@@ -53,7 +53,7 @@ class ProgressRepository {
     String? userId,
     DateTimeRange? timeRange,
   ) async {
-    Map<String, String> range = convertToParams(timeRange);
+    Map<String, String> range = _convertToParams(timeRange);
 
     try {
       if (userId != null) {
@@ -82,7 +82,7 @@ class ProgressRepository {
     }
   }
 
-  Map<String, String> convertToParams(DateTimeRange? timeRange) {
+  Map<String, String> _convertToParams(DateTimeRange? timeRange) {
     final range = <String, String>{};
     if (timeRange != null) {
       range['start'] = dateFormatter.format(timeRange.start);

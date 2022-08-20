@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
 import 'package:time_tracker_client/data/models/auth/user.dart';
 import 'package:time_tracker_client/data/models/progress/amendment.dart';
-import 'package:time_tracker_client/domain/models/progress/general_statistic.dart';
 import 'package:time_tracker_client/domain/models/progress/progress_filters.dart';
+import 'package:time_tracker_client/domain/models/progress/user_progress.dart';
 import 'package:time_tracker_client/domain/repository/progress/progress_repository.dart';
 import 'package:time_tracker_client/domain/usecase/progress/progress_usecase.dart';
 

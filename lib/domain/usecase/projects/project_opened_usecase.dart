@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:time_tracker_client/core/failure/failure.dart';
 import 'package:time_tracker_client/data/models/progress/progress.dart';
@@ -17,14 +17,10 @@ class ProjectOpenedUseCase {
     final projects = await _projectsRepository.fetchProjects(isFull);
     final progress = await _projectsRepository.fetchDailyProgress();
 
-    if (progress.isLeft()) {
-      final failure = (progress as Left).value;
-      return Left(failure);
-    }
+    if (progress.isLeft) return Left(progress.left);
+    final daily = progress.right;
 
-    final daily = (progress as Right).value as List<DailyProgress>;
     final dailyProgress = {for (var p in daily) p.projectId: p};
-
     return projects.map((p) => join(p, dailyProgress));
   }
 

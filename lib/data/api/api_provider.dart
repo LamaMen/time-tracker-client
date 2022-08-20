@@ -52,11 +52,11 @@ class ApiProvider {
 
 @module
 abstract class ServerAddressModule {
-  @Named('BaseUrl')
   @dev
+  @Named('BaseUrl')
   String get baseUrlTest => 'https://time-tracker-develop.herokuapp.com';
 
-  @Named('BaseUrl')
   @prod
-  String get baseUrlProd => 'https://time-tracker-develop.herokuapp.com';
+  @Named('BaseUrl')
+  String get baseUrlProd => 'https://api.tracker.remcoil.space';
 }

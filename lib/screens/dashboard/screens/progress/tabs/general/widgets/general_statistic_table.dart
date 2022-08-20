@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker_client/domain/models/progress/general_statistic.dart';
+import 'package:time_tracker_client/domain/models/progress/general_progress.dart';
 
 class GeneralStatisticTable extends StatelessWidget {
   final GeneralProgress statistic;
