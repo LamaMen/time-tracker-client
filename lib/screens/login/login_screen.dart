@@ -37,25 +37,27 @@ class LoginScreen extends StatelessWidget implements AutoRouteWrapper {
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          child: BlocConsumer<LoginBloc, LoginState>(
-            listenWhen: (_, state) => state is LoginSuccessfulState,
-            listener: (context, _) => context.router.replace(DashboardRoute()),
-            builder: (context, state) {
-              if (state is FetchFailedState) {
-                return _FailureState(state: state);
-              }
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: 268,
+              child: BlocConsumer<LoginBloc, LoginState>(
+                listenWhen: (_, state) => state is LoginSuccessfulState,
+                listener: (context, _) => context.router.replace(
+                  const DashboardRoute(),
+                ),
+                builder: (context, state) {
+                  if (state is FetchFailedState) {
+                    return _FailureState(state: state);
+                  }
 
-              if (state is SelectUserState) {
-                return SingleChildScrollView(
-                  child: SizedBox(
-                    height: 268,
-                    child: _SelectUserState(state: state),
-                  ),
-                );
-              }
+                  if (state is SelectUserState) {
+                    return _SelectUserState(state: state);
+                  }
 
-              return const _LoadState();
-            },
+                  return const _LoadState();
+                },
+              ),
+            ),
           ),
         ),
       ),
