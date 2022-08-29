@@ -17,28 +17,30 @@ class _FiltersDialogState extends State<FiltersDialog> {
       builder: (context, state) {
         return AlertDialog(
           title: const Text('Фильтр'),
-          content: SizedBox(
-            width: 250,
-            height: 200,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Checkbox(
-                      value: state.isFull,
-                      onChanged: (bool? value) {
-                        context
-                            .read<FiltersBloc>()
-                            .add(ChangeIsFullEvent(value));
-                      },
-                    ),
-                    const Text('Показывать все проекты'),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                _DateField(label: state.formattedRange, initial: state.range),
-              ],
+          content: SingleChildScrollView(
+            child: SizedBox(
+              width: 250,
+              height: 150,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: state.isFull,
+                        onChanged: (bool? value) {
+                          context
+                              .read<FiltersBloc>()
+                              .add(ChangeIsFullEvent(value));
+                        },
+                      ),
+                      const Text('Показывать все проекты'),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  _DateField(label: state.formattedRange, initial: state.range),
+                ],
+              ),
             ),
           ),
           actions: [

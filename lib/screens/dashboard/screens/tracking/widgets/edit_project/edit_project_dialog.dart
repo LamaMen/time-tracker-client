@@ -28,40 +28,42 @@ class EditProjectDialogState extends State<EditProjectDialog> {
       builder: (context, state) {
         return AlertDialog(
           title: const Text('Редактирование проекта'),
-          content: SizedBox(
-            width: 250,
-            height: 200,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Text('Название:'),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: TextField(
-                        controller: nameController,
-                        maxLines: 1,
+          content: SingleChildScrollView(
+            child: SizedBox(
+              width: 250,
+              height: 140,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Название:'),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: nameController,
+                          maxLines: 1,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    const Text('Архивный:'),
-                    const SizedBox(width: 8),
-                    Checkbox(
-                      value: state.project.isArchive,
-                      onChanged: (bool? value) {
-                        context
-                            .read<EditProjectBloc>()
-                            .add(ChangeArchiveEvent(value));
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Text('Архивный:'),
+                      const SizedBox(width: 8),
+                      Checkbox(
+                        value: state.project.isArchive,
+                        onChanged: (bool? value) {
+                          context
+                              .read<EditProjectBloc>()
+                              .add(ChangeArchiveEvent(value));
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           actions: [

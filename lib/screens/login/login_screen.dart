@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget implements AutoRouteWrapper {
             horizontal: 32,
           ),
           width: 300,
-          height: 300,
+          // height: 300,
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -46,7 +46,12 @@ class LoginScreen extends StatelessWidget implements AutoRouteWrapper {
               }
 
               if (state is SelectUserState) {
-                return _SelectUserState(state: state);
+                return SingleChildScrollView(
+                  child: SizedBox(
+                    height: 268,
+                    child: _SelectUserState(state: state),
+                  ),
+                );
               }
 
               return const _LoadState();

@@ -42,79 +42,81 @@ class AddAmendmentDialogState extends State<AddAmendmentDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Исправление прогресса'),
-      content: SizedBox(
-        width: 250,
-        height: 260,
-        child: BlocBuilder<AddAmendmentBloc, AddAmendmentState>(
-          builder: (context, state) {
-            if (state is SelectItemsState) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _Field(
-                    label: 'Проект:',
-                    field: DropdownWidget<Project>(
-                      hintText: 'Выберете проект',
-                      elements: state.projects,
-                      currentElement: state.project,
-                      onChanged: (project) {
-                        context
-                            .read<AddAmendmentBloc>()
-                            .add(ChangeProjectEvent(project));
-                      },
+      content: SingleChildScrollView(
+        child: SizedBox(
+          width: 250,
+          height: 240,
+          child: BlocBuilder<AddAmendmentBloc, AddAmendmentState>(
+            builder: (context, state) {
+              if (state is SelectItemsState) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _Field(
+                      label: 'Проект:',
+                      field: DropdownWidget<Project>(
+                        hintText: 'Выберете проект',
+                        elements: state.projects,
+                        currentElement: state.project,
+                        onChanged: (project) {
+                          context
+                              .read<AddAmendmentBloc>()
+                              .add(ChangeProjectEvent(project));
+                        },
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  _Field(
-                    label: 'День:',
-                    field: _DateField(state.date, widget.range),
-                  ),
-                  const SizedBox(height: 5),
-                  _Field(
-                    label: 'Часы:',
-                    field: TextField(
-                      keyboardType: TextInputType.number,
-                      controller: hoursController,
-                      maxLines: 1,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                      ],
+                    const SizedBox(height: 5),
+                    _Field(
+                      label: 'День:',
+                      field: _DateField(state.date, widget.range),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  _Field(
-                    label: 'Минуты:',
-                    field: TextField(
-                      keyboardType: TextInputType.number,
-                      controller: minutesController,
-                      maxLines: 1,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                      ],
+                    const SizedBox(height: 5),
+                    _Field(
+                      label: 'Часы:',
+                      field: TextField(
+                        keyboardType: TextInputType.number,
+                        controller: hoursController,
+                        maxLines: 1,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  _Field(
-                    label: 'Прибавлять:',
-                    field: Checkbox(
-                      value: state.isPositive,
-                      onChanged: (isPositive) {
-                        context
-                            .read<AddAmendmentBloc>()
-                            .add(ChangePositivesEvent(isPositive));
-                      },
+                    const SizedBox(height: 5),
+                    _Field(
+                      label: 'Минуты:',
+                      field: TextField(
+                        keyboardType: TextInputType.number,
+                        controller: minutesController,
+                        maxLines: 1,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              );
-            }
+                    const SizedBox(height: 5),
+                    _Field(
+                      label: 'Прибавлять:',
+                      field: Checkbox(
+                        value: state.isPositive,
+                        onChanged: (isPositive) {
+                          context
+                              .read<AddAmendmentBloc>()
+                              .add(ChangePositivesEvent(isPositive));
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }
 
-            if (state is LoadFailedState) {
-              return Center(child: Text(state.failure.message));
-            }
+              if (state is LoadFailedState) {
+                return Center(child: Text(state.failure.message));
+              }
 
-            return const Center(child: CircularLoader());
-          },
+              return const Center(child: CircularLoader());
+            },
+          ),
         ),
       ),
       actions: [

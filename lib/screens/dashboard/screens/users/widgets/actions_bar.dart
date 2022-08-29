@@ -115,51 +115,53 @@ class _SaveUserDialogState extends State<_SaveUserDialog> {
       title: Text(widget.initial.id.isEmpty
           ? 'Добавить пользователя'
           : 'Изменить пользователя'),
-      content: Form(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        key: _formKey,
-        child: SizedBox(
-          height: 258,
-          width: 500,
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 70,
-                child: TextFormField(
-                  controller: nameController,
-                  decoration: const InputDecoration(helperText: 'Имя'),
-                  validator: (value) =>
-                      value == null || value.isEmpty ? 'Введите имя' : null,
+      content: SingleChildScrollView(
+        child: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: _formKey,
+          child: SizedBox(
+            height: 260,
+            width: 250,
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 70,
+                  child: TextFormField(
+                    controller: nameController,
+                    decoration: const InputDecoration(helperText: 'Имя'),
+                    validator: (value) =>
+                        value == null || value.isEmpty ? 'Введите имя' : null,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 70,
-                child: TextFormField(
-                  controller: surnameController,
-                  decoration: const InputDecoration(helperText: 'Фамилия'),
-                  validator: (value) =>
-                      value == null || value.isEmpty ? 'Введите фамилию' : null,
+                SizedBox(
+                  height: 70,
+                  child: TextFormField(
+                    controller: surnameController,
+                    decoration: const InputDecoration(helperText: 'Фамилия'),
+                    validator: (value) =>
+                        value == null || value.isEmpty ? 'Введите фамилию' : null,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 70,
-                child: TextFormField(
-                  controller: passwordController,
-                  decoration: const InputDecoration(helperText: 'Пароль'),
-                  validator: (value) =>
-                      value == null || value.isEmpty ? 'Введите пароль' : null,
+                SizedBox(
+                  height: 70,
+                  child: TextFormField(
+                    controller: passwordController,
+                    decoration: const InputDecoration(helperText: 'Пароль'),
+                    validator: (value) =>
+                        value == null || value.isEmpty ? 'Введите пароль' : null,
+                  ),
                 ),
-              ),
-              DropdownWidget<UserRole>(
-                currentElement: role,
-                hintText: 'Роль пользователя',
-                elements: UserRole.values,
-                isExpanded: true,
-                onChanged: (value) {
-                  if (value != null) setState(() => role = value);
-                },
-              )
-            ],
+                DropdownWidget<UserRole>(
+                  currentElement: role,
+                  hintText: 'Роль пользователя',
+                  elements: UserRole.values,
+                  isExpanded: true,
+                  onChanged: (value) {
+                    if (value != null) setState(() => role = value);
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
